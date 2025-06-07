@@ -1,4 +1,5 @@
 account_id = "e43cab1aff32487fdabee8dbea58a442"
 name = "portfolio"
 compatibility_date = "2025-06-07"
-pages_build_output_dir = ".next"
+main = ".next/server/middleware.js"
+site = { bucket = ".next" }
