@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
-    "deploy": "npx wrangler pages deploy .vercel/output --project-name=portfolio"
+    "deploy": "next build && wrangler pages deploy .next"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
