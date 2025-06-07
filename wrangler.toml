@@ -1,5 +1,5 @@
 account_id = "e43cab1aff32487fdabee8dbea58a442"
 name = "portfolio"
 compatibility_date = "2025-06-07"
-main = ".next/server/middleware.js"
-site = { bucket = ".next" }
+main = ".next/standalone/server.js"
+site = { bucket = ".next/static" }
