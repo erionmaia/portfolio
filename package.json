@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
-    "deploy": "next build && wrangler deploy --assets=.next",
-    "postbuild": "npx @cloudflare/next-on-pages"
+    "deploy": "npx wrangler pages deploy .vercel/output --project-name=portfolio"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
@@ -29,7 +28,6 @@
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.12",
     "@types/node": "^20.11.16",
     "@types/react": "^18.2.52",
     "@types/react-dom": "^18.2.18",
