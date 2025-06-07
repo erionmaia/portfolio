@@ -4,3 +4,12 @@ compatibility_date = "2025-06-07"
 main = ".next/standalone/server.js"
 site = { bucket = ".next/static" }
 compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
+
+[env.production]
+workers_dev = true
+
+[build.upload]
+format = "service-worker"

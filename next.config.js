@@ -5,7 +5,7 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    serverComponentsExternalPackages: ['ws', 'tls', 'stream'],
+    serverComponentsExternalPackages: ['ws', 'tls', 'stream', 'crypto', 'fs', 'net', 'webpack', 'critters'],
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
@@ -16,9 +16,22 @@ const nextConfig = {
         tls: false,
         stream: false,
         crypto: false,
+        http: false,
+        https: false,
+        zlib: false,
+        path: false,
+        os: false,
+        webpack: false,
+        critters: false,
       };
     }
     return config;
+  },
+  // Disable webpack 5's automatic polyfills
+  webpack5: true,
+  // Disable webpack's automatic polyfills
+  future: {
+    webpack5: true,
   },
 };
 
