@@ -3,3 +3,4 @@ name = "portfolio"
 compatibility_date = "2025-06-07"
 main = ".next/standalone/server.js"
 site = { bucket = ".next/static" }
+compatibility_flags = ["nodejs_compat"]
