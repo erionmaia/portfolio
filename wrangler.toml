@@ -1,5 +1,0 @@
-name = "portfolio"
-compatibility_date = "2024-06-07"
-
-[site]
-bucket = ".next" 
