@@ -9,15 +9,24 @@ export async function POST(req: NextRequest) {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const { name, email, message } = await req.json()
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: 'Erion Maia - Portofolio <contato@erionmaia.dev>',
       to: ['erionmaia@gmail.com'],
       subject: `Contato do site: ${name}`,
-      replyTo: email,
-      text: message,
+      replyTo: 'contato@erionmaia.dev',
+      text: `Olá Erion,
+            Você recebeu um contato através do seu site.
+            ${name} <${email}> enviou a seguinte mensagem:
+            ${message}
+      `,
     })
 
-    return NextResponse.json({ success: true })
+    if (result.error) {
+      console.log('Result error', result);
+      return NextResponse.json({ error: 'Erro ao enviar mensagem.' }, { status: 500 })
+    };
+
+    return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao enviar mensagem.' }, { status: 500 })
   }

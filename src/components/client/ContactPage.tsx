@@ -2,14 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useRef } from 'react';
 
 export default function ContactPage() {
   const { t } = useLanguage();
+  const [status, setStatus] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus('loading');
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get("name"),
@@ -26,14 +30,15 @@ export default function ContactPage() {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
-        alert(t("contact.success"));
-        e.currentTarget.reset();
+      const resData = await response.json();
+      if (resData.success) {
+        setStatus('success');
+        if (formRef.current) formRef.current.reset();
       } else {
-        alert(t("contact.error"));
+        setStatus('error');
       }
     } catch (error) {
-      alert(t("contact.error"));
+      setStatus('error');
     }
   };
 
@@ -60,11 +65,20 @@ export default function ContactPage() {
               
               <div className="space-y-4">
                 <Link
-                  href="mailto:erionmaia@gmail.com"
+                  href="mailto:contato@erionmaia.dev"
                   className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="w-5 h-5" />
                   <span>{t("contact.email")}</span>
+                </Link>
+
+                <Link
+                  href="https://www.instagram.com/erion_developer"
+                  target="_blank"
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span>instagram.com/erion_developer</span>
                 </Link>
 
                 <Link
@@ -91,7 +105,7 @@ export default function ContactPage() {
             <div className="bg-card p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-semibold mb-6 dark:text-white">{t("contact.sendMessage")}</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label
                     htmlFor="name"
@@ -143,9 +157,20 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                  disabled={status === 'loading'}
                 >
-                  {t("contact.send")}
+                  {status === 'loading' ? 'Enviando...' : t("contact.send")}
                 </button>
+                {status === 'success' && (
+                  <p className="text-green-600 mt-2 text-center">
+                    Mensagem enviada com sucesso! Retornarei o contato em no máximo 48h.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p className="text-red-600 mt-2 text-center">
+                    Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde.
+                  </p>
+                )}
               </form>
             </div>
           </div>
