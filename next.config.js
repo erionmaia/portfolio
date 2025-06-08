@@ -5,28 +5,26 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    serverComponentsExternalPackages: ['ws', 'tls', 'stream', 'crypto', 'fs', 'net', 'webpack', 'critters'],
+    serverComponentsExternalPackages: ['@cloudflare/kv-asset-handler', 'itty-router'],
   },
   webpack: (config, { isServer }) => {
-    if (isServer) {
+    if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
         net: false,
         tls: false,
-        stream: false,
         crypto: false,
+        stream: false,
         http: false,
         https: false,
         zlib: false,
         path: false,
         os: false,
-        webpack: false,
-        critters: false,
-      };
+      }
     }
-    return config;
+    return config
   },
-};
+}
 
-module.exports = nextConfig; 
+module.exports = nextConfig 

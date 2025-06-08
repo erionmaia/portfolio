@@ -1,2 +1,10 @@
 name = "portfolio"
-compatibility_date = "2024-06-08" 
+main = "src/index.ts"
+compatibility_date = "2024-06-08"
+
+[build]
+command = "npm run build"
+upload.format = "service-worker"
+
+[site]
+bucket = "./out" 
