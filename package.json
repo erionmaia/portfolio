@@ -13,7 +13,7 @@
     "deploy": "npm run build && npx wrangler pages deploy out"
   },
   "dependencies": {
-    "@cloudflare/workers-types": "4.20240517.0",
+    "@cloudflare/workers-types": "4.20240320.0",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.0",
     "@mui/material": "5.15.12",
