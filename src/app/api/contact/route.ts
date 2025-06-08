@@ -1,37 +1,24 @@
-import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+export const dynamic = "force-dynamic";
 
-export async function POST(request: Request) {
+import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await request.json();
+    const { name, email, message } = await req.json()
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    await resend.emails.send({
+      from: 'Erion Maia - Portofolio <contato@erionmaia.dev>',
+      to: ['erionmaia@gmail.com'],
+      subject: `Contato do site: ${name}`,
+      replyTo: email,
+      text: message,
+    })
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: "erionschlenger@gmail.com",
-      subject: `Nova mensagem de contato de ${name}`,
-      text: `
-        Nome: ${name}
-        Email: ${email}
-        Mensagem: ${message}
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    return NextResponse.json({ message: "Email enviado com sucesso" }, { status: 200 });
+    return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Erro ao enviar email:", error);
-    return NextResponse.json(
-      { message: "Erro ao enviar email" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Erro ao enviar mensagem.' }, { status: 500 })
   }
-} 
+}
