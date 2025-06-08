@@ -62,6 +62,8 @@ const skills = [
       { name: "Docker", level: 70 },
       { name: "CI/CD", level: 65 },
       { name: "AWS", level: 60 },
+      { name: "Resend", level: 60 },
+      { name: "Cloudflare Pages", level: 60 },
     ]
   },
   {

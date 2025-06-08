@@ -1,9 +1,9 @@
-export const runtime = 'edge';
+export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     // Coletar informações do request
     const userAgent = request.headers.get("user-agent") || "N/A";
