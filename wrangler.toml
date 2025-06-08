@@ -7,4 +7,7 @@ command = "npm run build"
 upload.format = "service-worker"
 
 [site]
-bucket = "./out" 
+bucket = "./out"
+
+[triggers]
+domains = ["erionmaia.dev", "www.erionmaia.dev"] 
