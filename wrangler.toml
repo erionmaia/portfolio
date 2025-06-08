@@ -1,14 +1,10 @@
-fix deploy.account_id = "e43cab1aff32487fdabee8dbea58a442"
+account_id = "e43cab1aff32487fdabee8dbea58a442"
 name = "portfolio"
 compatibility_date = "2025-06-07"
-main = ".next/standalone/server.js"
-site = { bucket = "./out" }
-compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "out"
 
 [build]
 command = "npm run build"
-upload.format = "directory"
-upload.dir = "out"
 
 [env.production]
 workers_dev = true
