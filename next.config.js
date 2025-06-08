@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: 'export',
   images: {
     unoptimized: true,
   },
@@ -26,12 +26,6 @@ const nextConfig = {
       };
     }
     return config;
-  },
-  // Disable webpack 5's automatic polyfills
-  webpack5: true,
-  // Disable webpack's automatic polyfills
-  future: {
-    webpack5: true,
   },
 };
 
