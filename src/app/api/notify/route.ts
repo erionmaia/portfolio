@@ -1,8 +1,7 @@
-export const dynamic = "force-dynamic";
 export const runtime = 'edge';
 
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 export async function POST(request: Request) {
   try {
@@ -48,22 +47,14 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: "erionmaia@gmail.com",
+    await resend.emails.send({
+      from: 'Erion Maia <contato@erionmaia.dev>',
+      to: ['erionmaia@gmail.com'],
       subject: "Novo acesso ao seu portfólio!",
       html,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -73,4 +64,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}
