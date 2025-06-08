@@ -1,7 +1,6 @@
-export const dynamic = "force-dynamic";
+export const runtime = 'edge';
 
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,18 +46,32 @@ export async function POST(request: NextRequest) {
       </div>
     `;
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json({ error: 'API key not set' }, { status: 500 });
+    }
 
-    await resend.emails.send({
-      from: 'Erion Maia <contato@erionmaia.dev>',
-      to: ['erionmaia@gmail.com'],
-      subject: "Novo acesso ao seu portfólio!",
-      html,
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Erion Maia <contato@erionmaia.dev>',
+        to: ['erionmaia@gmail.com'],
+        subject: "Novo acesso ao seu portfólio!",
+        html,
+      }),
     });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return NextResponse.json({ error: error.message || 'Failed to send notification' }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error sending email:", error);
     return NextResponse.json(
       { error: "Failed to send notification" },
       { status: 500 }
