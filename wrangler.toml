@@ -9,5 +9,10 @@ upload.format = "service-worker"
 [site]
 bucket = "./out"
 
-[triggers]
-domains = ["erionmaia.dev", "www.erionmaia.dev"] 
+[[routes]]
+pattern = "erionmaia.dev/*"
+zone_name = "erionmaia.dev"
+
+[[routes]]
+pattern = "www.erionmaia.dev/*"
+zone_name = "erionmaia.dev" 
