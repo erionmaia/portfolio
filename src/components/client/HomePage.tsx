@@ -69,9 +69,10 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-    }, 4000);
+    }, 5000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length]);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
