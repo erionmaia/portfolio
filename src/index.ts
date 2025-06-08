@@ -1,5 +1,6 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import { Router } from 'itty-router'
+import type { ExecutionContext } from '@cloudflare/workers-types'
 
 const router = Router()
 
@@ -20,8 +21,10 @@ router.all('*', async (request: Request, env: any, ctx: ExecutionContext) => {
   }
 })
 
-export default {
+const worker = {
   async fetch(request: Request, env: any, ctx: ExecutionContext) {
     return router.handle(request, env, ctx)
   },
-} 
+}
+
+export default worker 
