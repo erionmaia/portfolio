@@ -9,8 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy": "npm run build && npx wrangler pages deploy out --project-name portfolio"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "11.11.4",
