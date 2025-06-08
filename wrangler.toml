@@ -1,10 +1,6 @@
-account_id = "e43cab1aff32487fdabee8dbea58a442"
 name = "portfolio"
 compatibility_date = "2025-06-07"
 pages_build_output_dir = "out"
-
-[build]
-command = "npm run build"
 
 [env.production]
 workers_dev = true
